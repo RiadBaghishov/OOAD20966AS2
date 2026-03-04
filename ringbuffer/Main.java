@@ -12,15 +12,13 @@ public class Main {
         RingBufferReader<String> reader2 = buffer.createReader("Reader2");
 
         System.out.println("Writer writes: A, B");
-
         buffer.write("A");
         buffer.write("B");
 
         System.out.println("Reader1 reads: " + reader1.read().orElse("Nothing"));
         System.out.println("Reader2 reads: " + reader2.read().orElse("Nothing"));
 
-        System.out.println("Writer writes: C, D");
-
+        System.out.println("Writer writes: C, D (overwrite may happen depending on capacity)");
         buffer.write("C");
         buffer.write("D");
 
