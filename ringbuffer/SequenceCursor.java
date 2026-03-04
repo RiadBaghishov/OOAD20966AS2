@@ -22,4 +22,3 @@ package com.example.ringbuffer;
     }
 }
 
-
