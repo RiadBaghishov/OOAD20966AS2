@@ -2,6 +2,10 @@ package ringbuffer;
 
 import java.util.Optional;
 
+/**
+ * Independent reader: each reader has its own cursor.
+ * Reads do NOT remove items from the buffer.
+ */
 public final class RingBufferReader<T> {
 
     private final String name;
@@ -18,28 +22,32 @@ public final class RingBufferReader<T> {
         return name;
     }
 
+    /**
+     * Reads next item for this reader if available.
+     * - If reader is lapped (data overwritten), it skips to oldest available.
+     * - If nothing new, returns Optional.empty().
+     */
     public Optional<T> read() {
         synchronized (buffer.lock()) {
-
             long oldest = buffer.oldestSeq();
-            long newest = buffer.nextWriteSeq();
+            long newestExclusive = buffer.nextWriteSeq();
 
             long seq = cursor.nextReadSeq();
 
+            // Lapped: requested seq is already overwritten
             if (seq < oldest) {
                 cursor.setNextReadSeq(oldest);
                 seq = oldest;
             }
 
-            if (seq >= newest) {
+            // No new data available
+            if (seq >= newestExclusive) {
                 return Optional.empty();
             }
 
             T item = buffer.getBySequence(seq);
             cursor.advance();
-
             return Optional.ofNullable(item);
         }
     }
 }
-
