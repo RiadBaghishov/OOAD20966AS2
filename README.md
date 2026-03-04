@@ -1,4 +1,4 @@
-# Ring Buffer (Single Writer, Multiple Readers)
+# Assignment 2
 
 ## Overview
 
