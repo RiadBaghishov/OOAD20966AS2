@@ -21,4 +21,3 @@ package com.example.ringbuffer;
         this.nextReadSeq++;
     }
 }
-
