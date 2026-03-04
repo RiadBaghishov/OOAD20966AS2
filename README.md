@@ -48,4 +48,14 @@ The solution follows basic **Object-Oriented Design principles** with clear sepa
 ## How to Compile
 
 Navigate to the project directory and run:
+```bash
+javac -d out ringbuffer/*.java
+```
+---
 
+## How to Run
+
+After compiling, run the program with:
+```bash
+java -cp out ringbuffer.App
+```
