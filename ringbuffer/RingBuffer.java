@@ -65,3 +65,4 @@ public final class RingBuffer<T> {
         return (T) buffer[index];
     }
 }
+
